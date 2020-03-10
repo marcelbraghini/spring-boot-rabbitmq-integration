@@ -1,1 +1,14 @@
-
+spring:
+  application:
+    name: @name@
+  main:
+    allow-bean-definition-overriding: true
+  profiles:
+    active: @activatedProperties@
+server:
+  port: @server.port@
+  servlet:
+    context-path: /
+logging:
+  level:
+    root: @log.level@
