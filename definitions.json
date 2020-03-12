@@ -33,11 +33,27 @@
       "durable":true,
       "auto_delete":false,
       "arguments":{}
+    },
+    {
+      "name":"ERROS",
+      "vhost":"/",
+      "durable":true,
+      "auto_delete":false,
+      "arguments":{}
     }
   ],
   "exchanges":[
     {
       "name":"E_FILA",
+      "vhost":"/",
+      "type":"topic",
+      "durable":true,
+      "auto_delete":false,
+      "internal":false,
+      "arguments":{}
+    },
+    {
+      "name":"E_ERROS",
       "vhost":"/",
       "type":"topic",
       "durable":true,
@@ -52,7 +68,15 @@
       "vhost":"/",
       "destination":"FILA",
       "destination_type":"queue",
-      "routing_key":"FILA",
+      "routing_key":"fila",
+      "arguments":{}
+    },
+    {
+      "source":"E_ERROS",
+      "vhost":"/",
+      "destination":"ERROS",
+      "destination_type":"queue",
+      "routing_key":"erro",
       "arguments":{}
     }
   ]

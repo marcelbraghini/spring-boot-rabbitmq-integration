@@ -1,5 +1,6 @@
 package br.com.marcelbraghini.springbootrabbitmqintegration;
 
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -8,6 +9,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.retry.backoff.ExponentialBackOffPolicy;
+import org.springframework.retry.support.RetryTemplate;
 
 @SpringBootApplication
 public class SpringBootRabbitmqIntegrationApplication {
@@ -37,6 +40,19 @@ public class SpringBootRabbitmqIntegrationApplication {
         connectionFactory.setPassword(password);
         connectionFactory.setRequestedHeartBeat(60);
         return connectionFactory;
+    }
+
+    @Bean
+    public AmqpTemplate rabbitTemplate() {
+        RabbitTemplate template = new RabbitTemplate(rabbitConnectionFactory());
+        RetryTemplate retryTemplate = new RetryTemplate();
+        ExponentialBackOffPolicy backOffPolicy = new ExponentialBackOffPolicy();
+        backOffPolicy.setInitialInterval(500);
+        backOffPolicy.setMultiplier(10.0);
+        backOffPolicy.setMaxInterval(10000);
+        retryTemplate.setBackOffPolicy(backOffPolicy);
+        template.setRetryTemplate(retryTemplate);
+        return template;
     }
 
 }

@@ -28,5 +28,4 @@ mvn spring-boot:run
 ```
 
 ### TODO 
-- Adicionar conexões com o rabbitmq
 - Mandar mensagens com problema para uma fila de erros
