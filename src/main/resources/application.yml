@@ -5,6 +5,11 @@ spring:
     allow-bean-definition-overriding: true
   profiles:
     active: @activatedProperties@
+  rabbitmq:
+    host: @rabbitmq.host@
+    port: @rabbitmq.port@
+    username: @rabbitmq.username@
+    password: @rabbitmq.password@
 server:
   port: @server.port@
   servlet:

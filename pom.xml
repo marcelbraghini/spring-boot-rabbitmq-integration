@@ -86,8 +86,8 @@
             <scope>test</scope>
             <exclusions>
                 <exclusion>
-                    <groupId>junit</groupId>
-                    <artifactId>junit</artifactId>
+                    <groupId>org.junit.vintage</groupId>
+                    <artifactId>junit-vintage-engine</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
@@ -207,6 +207,10 @@
                 <activatedProperties>development</activatedProperties>
                 <log.level>INFO</log.level>
                 <server.port>8085</server.port>
+                <rabbitmq.host>localhost</rabbitmq.host>
+                <rabbitmq.port>5672</rabbitmq.port>
+                <rabbitmq.username>guest</rabbitmq.username>
+                <rabbitmq.password>guest</rabbitmq.password>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -218,6 +222,10 @@
                 <activatedProperties>homologation</activatedProperties>
                 <log.level>DEBUG</log.level>
                 <server.port>8085</server.port>
+                <rabbitmq.host>localhost</rabbitmq.host>
+                <rabbitmq.port>5672</rabbitmq.port>
+                <rabbitmq.username>guest</rabbitmq.username>
+                <rabbitmq.password>guest</rabbitmq.password>
             </properties>
         </profile>
     </profiles>

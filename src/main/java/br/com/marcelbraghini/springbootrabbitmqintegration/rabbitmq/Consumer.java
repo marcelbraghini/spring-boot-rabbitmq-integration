@@ -1,7 +1,6 @@
 package br.com.marcelbraghini.springbootrabbitmqintegration.rabbitmq;
 
 import lombok.extern.slf4j.Slf4j;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -13,8 +12,11 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 @Service
 public class Consumer {
 
+    /**
+     * Consumidor da fila: FILA
+     */
     @RabbitListener(queues = "FILA")
-    public void receiveMessage(final Message message) throws JSONException {
+    public void receiveMessage(final Message message) {
         log.info("<MENSAGEM>: {}", message.toString());
         final JSONObject json = getJsonObject(message.getBody());
 
@@ -30,6 +32,9 @@ public class Consumer {
         }
     }
 
+    /**
+     * Faz a leitura da mensagem e devolve um JSONObject
+     */
     private JSONObject getJsonObject(final byte[] msg) {
         JSONObject objReceived = null;
         try {
@@ -38,12 +43,15 @@ public class Consumer {
 
             log.info("<MENSAGEM RECEBIDA>: {}", objReceived.toString());
         } catch (final Exception e) {
-            log.info("<MENSAGEM RECEBIDA>: {}", objReceived.toString());
+            log.info("<MENSAGEM RECEBIDA>: {}", new String(msg, UTF_8));
             log.error("<JSON ERROR> String -> JsonObject [{}]>", e.getMessage());
         }
         return objReceived;
     }
 
+    /**
+     * Validar os campos que são indispensáveis
+     */
     private boolean isValidObject(final JSONObject json) {
         if (json.isNull("nome") || json.isNull("idade") || json.isNull("habilidades")){
             return false;
